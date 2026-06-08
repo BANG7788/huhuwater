@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>阿胡淨水｜廚下飲水機與全戶軟水 - 全品牌規格比價站</title>
+    <style>
+        :root {
+            --primary: #0077b6;
+            --secondary: #06d6a0;
+            --dark: #1d3557;
+            --light: #f8f9fa;
+            --gray: #6c757d;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif, "Microsoft JhengHei";
+        }
+
+        body {
+            background-color: #f4f6f9;
+            color: #333;
+            padding-bottom: 100px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--dark), var(--primary));
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            font-size: 2.1rem;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            letter-spacing: 1px;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        /* 搜尋與篩選區 */
+        .controls-panel {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            margin-bottom: 25px;
+        }
+
+        .search-box {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .search-box input, .search-box select {
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+
+        .search-box input { flex: 2; }
+        .search-box select { flex: 1; }
+
+        .filter-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: flex-start;
+        }
+
+        .filter-btn {
+            background-color: var(--light);
+            border: 1px solid #ddd;
+            color: #555;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.2s ease;
+            font-size: 0.9rem;
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            background-color: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* 狀態統計 */
+        .stats-info {
+            margin-bottom: 15px;
+            color: var(--gray);
+            font-size: 0.9rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .line-top-badge {
+            background-color: #06c755;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 15px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.85rem;
+        }
+
+        /* 產品網格 */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 50px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border: 1px solid #eef2f5;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+        }
+
+        .brand-badge {
+            background-color: #e0f2fe;
+            color: var(--primary);
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            align-self: flex-start;
+            margin-bottom: 10px;
+        }
+
+        .product-name {
+            font-size: 1rem;
+            font-weight: bold;
+            color: var(--dark);
+            margin-bottom: 8px;
+            line-height: 1.4;
+            min-height: 2.8rem;
+        }
+
+        .product-type {
+            font-size: 0.85rem;
+            color: var(--gray);
+            margin-bottom: 12px;
+        }
+
+        .product-price {
+            font-size: 1.3rem;
+            color: #e63946;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 10px 8px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            text-align: center;
+            font-size: 0.85rem;
+            transition: background 0.2s;
+        }
+
+        .btn-compare {
+            background-color: #f1faee;
+            color: #457b9d;
+            border: 1px solid #a8dadc;
+        }
+
+        .btn-compare.selected {
+            background-color: #e63946;
+            color: white;
+            border-color: #e63946;
+        }
+
+        .btn-contact {
+            background-color: #06c755;
+            color: white;
+        }
+        .btn-contact:hover {
+            background-color: #05b04b;
+        }
+
+        /* 比較專區 */
+        .compare-section {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 -4px 25px rgba(0,0,0,0.15);
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            max-height: 48vh;
+            overflow-y: auto;
+            z-index: 1000;
+            border-top: 4px solid #06c755;
+            display: none;
+        }
+
+        .compare-section.active { display: block; }
+
+        .compare-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .compare-title {
+            font-size: 1.3rem;
+            color: var(--dark);
+            font-weight: bold;
+        }
+
+        .close-compare {
+            background: #e1e8ed;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            color: #444;
+        }
+
+        .compare-table-wrapper { overflow-x: auto; }
+
+        .compare-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.9rem;
+        }
+
+        .compare-table th, .compare-table td {
+            padding: 12px;
+            border: 1px solid #dee2e6;
+            min-width: 200px;
+        }
+
+        .compare-table th {
+            background-color: var(--light);
+            color: var(--dark);
+        }
+
+        .compare-table td:first-child, .compare-table th:first-child {
+            min-width: 110px;
+            background-color: #f1f5f9;
+            font-weight: bold;
+            position: sticky;
+            left: 0;
+            z-index: 2;
+        }
+
+        .remove-compare {
+            color: #e63946;
+            cursor: pointer;
+            background: none;
+            border: none;
+            font-weight: bold;
+        }
+
+        .btn-line-inline {
+            background-color: #06c755;
+            color: white;
+            padding: 6px 10px;
+            border: none;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 0.8rem;
+            display: inline-block;
+            margin-top: 5px;
+            text-decoration: none;
+        }
+
+        .footer-info {
+            text-align: center;
+            padding: 40px 20px 140px 20px;
+            color: var(--gray);
+            font-size: 0.9rem;
+            background-color: #eaeff2;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>💧 阿胡淨水｜廚下飲水機與全戶軟水</h1>
+        <p>全台各大品牌授權經銷 | 線上即時比價規格挑選 | 專人到府精準規劃</p>
+    </header>
+
+    <div class="container">
+        
+        <!-- 複合式搜尋與篩選面板 -->
+        <div class="controls-panel">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="🔍 輸入產品型號、名稱或品牌快速搜尋..." oninput="filterAndSearch()">
+                <select id="brandSelect" onchange="filterAndSearch()">
+                    <option value="all">所有品牌 (包含大胖全戶、各國原裝進口大廠)</option>
+                </select>
+            </div>
+            <div class="filter-container" id="typeFilters">
+                <button class="filter-btn active" onclick="changeType('all', this)">全部類型</button>
+                <button class="filter-btn" onclick="changeType('淨水器/生飲系統', this)">淨水器/生飲系統</button>
+                <button class="filter-btn" onclick="changeType('廚下飲水機/淨熱飲', this)">廚下飲水機/淨熱飲</button>
+                <button class="filter-btn" onclick="changeType('全戶過濾/軟水系統', this)">全戶過濾/軟水系統</button>
+                <button class="filter-btn" onclick="changeType('落地/桌上飲水機', this)">落地/桌上飲水機</button>
+                <button class="filter-btn" onclick="changeType('濾芯/其他', this)">濾芯/其他</button>
+            </div>
+        </div>
+
+        <div class="stats-info">
+            <span id="statsInfo">正在載入產品資料...</span>
+            <a href="https://line.me/R/ti/p/@278rcglr" target="_blank" class="line-top-badge">💬 直接加 LINE 線上諮詢</a>
+        </div>
+
+        <!-- 產品列表 -->
+        <div class="product-grid" id="productGrid"></div>
+
+        <!-- 底部浮動式比較專區 -->
+        <div class="compare-section" id="compareSection">
+            <div class="compare-header">
+                <div class="compare-title">📊 產品即時規格對比 (最多 4 款)</div>
+                <button class="close-compare" onclick="clearAllCompare()">清空全部</button>
+            </div>
+            <div class="compare-table-wrapper">
+                <table class="compare-table" id="compareTable"></table>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-info">
+        <p>經銷諮詢：阿胡淨水｜廚下飲水機與全戶軟水</p>
+        <p style="margin-top: 5px;">官方 LINE ID: <strong style="color: #05b04b;">@278rcglr</strong> (歡迎加入預約免費到府水質估價)</p>
+    </div>
+
+    <script>
+        // 核心完整產品資料庫
+        const products = [
+            // 1. 3M
+            { id: 1, brand: "3M", name: "S201 超微密櫥下型生飲淨水器", type: "淨水器/生飲系統", spec: "超微密0.2微米生飲、高效除氯、適合小家庭", price: 12500 },
+            { id: 2, brand: "3M", name: "3US-MAX-S01H 強效型廚下生飲淨水系統", type: "淨水器/生飲系統", spec: "雙效高防護、通過NSF 42/53認證、高效濾鉛", price: 9500 },
+            { id: 3, brand: "3M", name: "極淨倍智雙效淨水系統 UT-V390", type: "廚下飲水機/淨熱飲", spec: "智慧雙效倍智過濾、多功能微電腦面版控制", price: 32900 },
+            { id: 4, brand: "3M", name: "極淨倍智淨水系統 SD390", type: "廚下飲水機/淨熱飲", spec: "大過濾量、智慧型濾芯壽命監控", price: 26900 },
+            { id: 5, brand: "3M", name: "極淨倍智雙效淨水系統 X90-G", type: "淨水器/生飲系統", spec: "高效阻垢、解決硬水地區水垢問題", price: 29900 },
+            { id: 6, brand: "3M", name: "櫥下型複合式雙效型淨水系統特惠組 HCR-05", type: "淨水器/生飲系統", spec: "高性價比入門款、全效防護抑垢", price: 6990 },
+            { id: 7, brand: "3M", name: "全戶式不鏽鋼淨水系統 SS802 (含濾芯)", type: "全戶過濾/軟水系統", spec: "304高規格不鏽鋼、全屋用水大流量第一道淨化", price: 29800 },
+            { id: 8, brand: "3M", name: "全戶式不鏽鋼淨水系統 SS801 (含濾芯)", type: "全戶過濾/軟水系統", spec: "適合中小坪數/公寓、全屋除氯去雜質", price: 23800 },
+            { id: 9, brand: "3M", name: "全戶式前置淨水系統 BFS3-40BK 曜石黑", type: "全戶過濾/軟水系統", spec: "反洗式前置過濾、高強度濾網攔截泥沙鐵鏽", price: 16800 },
+            { id: 10, brand: "3M", name: "SQC快拆前置PP過濾系統 3PS-S001-5", type: "濾芯/其他", spec: "阻絕泥沙大顆粒、延長主濾芯壽命", price: 1680 },
+            { id: 11, brand: "3M", name: "SQC快拆前置樹脂軟水系統 3RF-S001-5", type: "濾芯/其他", spec: "新型氫離子型樹脂、有效軟化水質去除水垢", price: 2480 },
+            { id: 12, brand: "3M", name: "HPURE-15G 淨熱一體觸控式熱飲機", type: "廚下飲水機/淨熱飲", spec: "廚下節能冷熱一體、頂級防燙安全龍頭", price: 41900 },
+
+            // 2. 愛惠浦 Everpure
+            { id: 13, brand: "愛惠浦 Everpure", name: "PurVive-4H² 淨水設備生飲級單道式廚下型", type: "淨水器/生飲系統", spec: "專利Lime-Plus抑垢、免插電無廢水、大過濾量", price: 8800 },
+            { id: 14, brand: "愛惠浦 Everpure", name: "PurVive® Pro-MC2 Single 商業家用級淨水器", type: "淨水器/生飲系統", spec: "高濾水量、強效吸附化學異味及極細微雜質", price: 9250 },
+            { id: 15, brand: "愛惠浦 Everpure", name: "PurVive® Pro-BH2 抗垢型生飲淨水器", type: "淨水器/生飲系統", spec: "內建銀離子配方抑菌、強效抑制茶垢", price: 8630 },
+            { id: 16, brand: "愛惠浦 Everpure", name: "PurVive® Pro-MH2 頂級生飲淨水器", type: "淨水器/生飲系統", spec: "石灰質高抑制、符合商用與家用高規標準", price: 7200 },
+            { id: 17, brand: "愛惠浦 Everpure", name: "PurVive®-H300NXT 雙效除鉛生飲級淨水器", type: "淨水器/生飲系統", spec: "新一代NXT除鉛配方、VOCs揮發性有機物去除", price: 9170 },
+            { id: 18, brand: "愛惠浦 Everpure", name: "PurVive® Duo-H1200 雙道式強效型淨水設備", type: "淨水器/生飲系統", spec: "雙道加強、針對高重金屬/硬水質區域設計", price: 17720 },
+            { id: 19, brand: "愛惠浦 Everpure", name: "PurVive®-2HL 精緻型生飲級淨水器", type: "淨水器/生飲系統", spec: "小巧不佔廚下空間、具備基礎除鉛與阻垢", price: 7100 },
+            { id: 20, brand: "愛惠浦 Everpure", name: "PurVive®-4HL 升級版櫥下生飲淨水器", type: "淨水器/生飲系統", spec: "中大過濾量、高效濾除重金屬與囊胞菌", price: 7460 },
+            { id: 21, brand: "愛惠浦 Everpure", name: "PurVive-EF1500 大流量高效大師系列", type: "淨水器/生飲系統", spec: "EF大師大流量處理、適合高頻率大量用水家庭", price: 9530 },
+            { id: 22, brand: "愛惠浦 Everpure", name: "PurVive-EF3000 全效大流量淨水設備", type: "淨水器/生飲系統", spec: "超高處理餘氯、商用茶飲店與豪宅規格", price: 10880 },
+            { id: 23, brand: "愛惠浦 Everpure", name: "PurVive-EF6000 旗艦大流量大師級淨水器", type: "淨水器/生飲系統", spec: "大師系列最大容量、極致濾淨、流速極快", price: 11780 },
+            { id: 24, brand: "愛惠浦 Everpure", name: "全戶型 VITA 全屋式大流量淨水器", type: "全戶過濾/軟水系統", spec: "全棟式過濾、保護全家親膚用水與家電管路", price: 27965 },
+
+            // 3. Everpoll 愛科
+            { id: 25, brand: "Everpoll 愛科", name: "傳家寶全戶濾淨升級版 FH-151 (150噸)", type: "全戶過濾/軟水系統", spec: "全機304不鏽鋼、專利雙效雙層濾芯、高耐壓", price: 23800 },
+            { id: 26, brand: "Everpoll 愛科", name: "傳家寶全戶濾淨基本款 AHP-150", type: "全戶過濾/軟水系統", spec: "平價大流量全戶過濾、有效去除水中雜質餘氯", price: 16800 },
+            { id: 27, brand: "Everpoll 愛科", name: "傳家寶全戶濾淨中大坪數型 FH-200 (200噸)", type: "全戶過濾/軟水系統", spec: "高出水量、專為透天別墅/中大坪數客群規劃", price: 25800 },
+            { id: 28, brand: "Everpoll 愛科", name: "傳家寶全戶濾淨旗艦型 FH-301 (300噸)", type: "全戶過濾/軟水系統", spec: "超大濾淨量300噸、濾芯壽命超長、全屋守護", price: 29500 },
+            { id: 29, brand: "Everpoll 愛科", name: "傳家寶工業商業級全戶濾淨 FH-500 (500噸)", type: "全戶過濾/軟水系統", spec: "大容量商業級、高用水量透天或中小型商用推薦", price: 45000 },
+            { id: 30, brand: "Everpoll 愛科", name: "DCP-3004 全效完美版廚下淨水系統", type: "淨水器/生飲系統", spec: "四道漸進式精密濾淨、保留人體所需礦物質", price: 12500 },
+            { id: 31, brand: "Everpoll 愛科", name: "RO-600 直出機型 RO 逆滲透純水機", type: "廚下飲水機/淨熱飲", spec: "600G大出水量、免裝壓力桶、新鮮現濾直出", price: 21800 },
+
+            // 4. SAKURA 櫻花
+            { id: 32, brand: "SAKURA 櫻花", name: "廚下 RO 雙溫淨熱飲一體機 P0531", type: "廚下飲水機/淨熱飲", spec: "一體機省空間、觸控智能龍頭、高溫殺菌安全", price: 36810 },
+            { id: 33, brand: "SAKURA 櫻花", name: "廚下觸控式熱飲機 P0563B", type: "廚下飲水機/淨熱飲", spec: "高質感LED觸控龍頭、節能標章、大容量熱膽", price: 28800 },
+            { id: 34, brand: "SAKURA 櫻花", name: "快捷高效生飲級淨水器 P0671", type: "淨水器/生飲系統", spec: "SQC快拆濾芯、專利銀離子除菌、免插電", price: 7191 },
+            { id: 35, brand: "SAKURA 櫻花", name: "雙管快捷高效型淨水器 P0681", type: "淨水器/生飲系統", spec: "雙管防護、加強除重金屬與石灰質阻垢", price: 8500 },
+
+            // 5. 宮黛
+            { id: 36, brand: "宮黛", name: "GD600 廚下觸控式雙溫飲水機 (+GD三道淨水組)", type: "廚下飲水機/淨熱飲", spec: "超吸睛美學專利龍頭、多段全換熱節能、超夯熱銷", price: 34800 },
+            { id: 37, brand: "宮黛", name: "GD800 廚下觸控式冰溫熱三溫飲水機", type: "廚下飲水機/淨熱飲", spec: "冰溫熱三溫一體、廚下冷卻迴路系統、美型節能", price: 46800 },
+            { id: 38, brand: "宮黛", name: "GD-900 廚下型高階觸控式雙溫飲水機", type: "廚下飲水機/淨熱飲", spec: "旗艦級觸控龍頭、高溫自動熱交換殺菌、全防燙", price: 38000 },
+
+            // 6. Philips 飛利浦
+            { id: 39, brand: "Philips 飛利浦", name: "小淨靈淨熱合一廚下瞬熱淨水器 (AUT-7063)", type: "廚下飲水機/淨熱飲", spec: "厚膜秒級瞬熱、富氫水微分子、智能溫控觸控", price: 49900 },
+            { id: 40, brand: "Philips 飛利浦", name: "小瞬靜 AUT7005 瞬熱廚下雙溫淨水器", type: "廚下飲水機/淨熱飲", spec: "不需儲水桶、現熱現喝、五合一複合精密過濾", price: 29999 },
+
+            // 7. 普立創
+            { id: 41, brand: "普立創", name: "濱特爾 PT-1600 600G 免壓力桶直輸機", type: "廚下飲水機/淨熱飲", spec: "結合Pentair核心技術、超高出水量、鮮榨直出", price: 16000 },
+            { id: 42, brand: "普立創", name: "TR-3 廚下型五道式高階 RO 逆滲透純水機", type: "廚下飲水機/淨熱飲", spec: "經典五道層層過濾、超純淨水質、甘甜好喝", price: 9800 },
+
+            // 8. AQUAS 淨工坊
+            { id: 43, brand: "AQUAS 淨工坊", name: "AQ928 旗艦款 RO 廚下淨熱一體機", type: "廚下飲水機/淨熱飲", spec: "內建高效RO膜、廚下冷熱大容量、一體式頂級首選", price: 45000 },
+            { id: 44, brand: "AQUAS 淨工坊", name: "AQ-120S 全戶中央智慧型濾淨軟水機", type: "全戶過濾/軟水系統", spec: "食品級軟水樹脂、全自動智慧時間流量雙反洗", price: 58000 },
+            { id: 45, brand: "AQUAS 淨工坊", name: "AS20 全戶不銹鋼精密濾淨系統", type: "全戶過濾/軟水系統", spec: "SUS304高抗壓外殼、大出水量、深層濾除懸浮物", price: 21800 },
+
+            // 9. 川菱淨工坊
+            { id: 46, brand: "川菱淨工坊", name: "TY-801 10吋大胖不鏽鋼全戶過濾系統", type: "全戶過濾/軟水系統", spec: "自營高CP值、全不鏽鋼耐曬抗候、適合透天/頂樓", price: 19800 },
+            { id: 47, brand: "川菱淨工坊", name: "PCU-20 雙道立架大流量全戶過濾設備", type: "全戶過濾/軟水系統", spec: "便利立架安裝換芯免費力、雙道加強版除氯防砂", price: 9500 },
+
+            // 10. 豪星
+            { id: 48, brand: "豪星", name: "HM-900-R 落地型冰溫熱 RO 殺菌飲水機", type: "落地/桌上飲水機", spec: "商用辦公室首選、內置RO六道系統、全自動高溫殺菌", price: 28000 },
+            { id: 49, brand: "豪星", name: "HS-30GB 立地式大容量電開水機", type: "落地/桌上飲水機", spec: "30加侖超大貯備量、工廠/學校/餐飲店專用高功率", price: 24000 },
+
+            // 11. 廚事寶
+            { id: 50, brand: "廚事寶", name: "廚事寶 靜音高扭力廚餘廚下處理機", type: "濾芯/其他", spec: "廚下鐵胃、抑菌研磨、一鍵碎骨除異味", price: 16800 },
+
+            // 12. Aquatek 沛宸
+            { id: 51, brand: "Aquatek 沛宸", name: "沛宸 AQ-3123 廚下式高溫開水機", type: "廚下飲水機/淨熱飲", spec: "專利熱交換節能、全機全不鏽鋼管路、醫療級防護", price: 32000 },
+
+            // 13. Buder 普德
+            { id: 52, brand: "Buder 普德", name: "BD-3004 廚下型高規節能熱飲機", type: "廚下飲水機/淨熱飲", spec: "日本大廠手把控制、超厚保溫層極致省電", price: 26500 },
+
+            // 14. GE 奇異
+            { id: 53, brand: "GE 奇異", name: "極煦 700G 淨熱合一奈濾廚下淨熱飲機", type: "廚下飲水機/淨熱飲", spec: "GE獨家奈濾技術、保留部分天然礦物質、直出瞬熱", price: 38930 },
+
+            // 15. JUDO
+            { id: 54, brand: "JUDO", name: "Filt-B 德國原裝進口手動反沖洗雜質過濾器", type: "全戶過濾/軟水系統", spec: "原裝進口、專利不卡垢反洗技術、航太級耐壓外殼", price: 19800 },
+
+            // 16. 格溫拜克 GRUNBECK
+            { id: 55, brand: "格溫拜克 GRUNBECK", name: "BOXER® RX 全自動反沖洗前置雜質過濾器", type: "全戶過濾/軟水系統", spec: "頂級豪宅標配、德系精密工藝、全自動定時反洗", price: 35000 },
+
+            // 17. BoQ 博群
+            { id: 56, brand: "BoQ 博群", name: "頂級商用/家用櫥下氣泡水機組合", type: "廚下飲水機/淨熱飲", spec: "高濃度微氣泡、激爽口感、廚下收納免占空間", price: 42000 },
+
+            // 18. BWT 德國倍世
+            { id: 57, brand: "BWT 德國倍世", name: "Slim 4 鎂離子專利生飲級廚下淨水器", type: "淨水器/生飲系統", spec: "添加獨家專利鎂離子、水質口感極度甘甜順口", price: 22500 },
+
+            // 19. 元山家電
+            { id: 58, brand: "元山家電", name: "YS-8040WP 全戶智慧型中央濾淨系統", type: "全戶過濾/軟水系統", spec: "多功能微電腦背光面板、高效除化學除味", price: 20900 },
+
+            // 20. 美國 CLACK
+            { id: 59, brand: "美國 CLACK", name: "CLACK 1英吋智慧大流量全戶全自動軟水系統", type: "全戶過濾/軟水系統", spec: "美國原裝控制閥、智慧再生省鹽省水、極高耐用度", price: 72000 },
+
+            // 21. 克麗歐 AQUACLiO
+            { id: 60, brand: "克麗歐 AQUACLiO", name: "AQUACLiO+ CARE 智慧高效抗菌雜質軟水系統", type: "全戶過濾/軟水系統", spec: "智慧控制閥、三重抗菌防護技術、超低壓損", price: 77000 },
+
+            // 22. 美國 Culligan 康麗根
+            { id: 61, brand: "美國 Culligan", name: "AVE-T2800 櫥下型 RO 瞬熱雙溫全功能飲水機", type: "廚下飲水機/淨熱飲", spec: "美國百年水處理大廠、觸控龍頭多檔調溫、極致純淨", price: 39800 },
+            { id: 62, brand: "美國 Culligan", name: "US-202C-TW 瞬熱極美櫥下旗艦 RO 飲水機", type: "廚下飲水機/淨熱飲", spec: "時尚精品外觀設計、即開即熱不復熱、防二次污染", price: 49800 },
+
+            // 23-29 其他進口精選
+            { id: 63, brand: "全屋淨 SPACEPURE", name: "SF-UD2-21L 全戶高階淨軟一體複合機", type: "全戶過濾/軟水系統", spec: "淨水軟水二合一、節省頂樓或工作陽台雙倍空間", price: 69800 },
+            { id: 64, brand: "碧然德 Brita", name: "MyPure Pro V9 超微濾櫥下旗艦級淨水系統", type: "淨水器/生飲系統", spec: "中空絲膜高階過濾、100%過濾囊胞菌、安心直生飲", price: 22525 },
+            { id: 65, brand: "水精靈 AQUA-WIN", name: "高出水 500G 箱型免壓力桶直輸 RO 機", type: "廚下飲水機/淨熱飲", spec: "美觀防塵箱型設計、雙流道高濾速、新鮮純水現喝", price: 15800 }
+        ];
+
+        let compareList = [];
+        let currentType = 'all';
+
+        // 動態生成品牌選單
+        function initBrandSelect() {
+            const select = document.getElementById('brandSelect');
+            const brands = [...new Set(products.map(p => p.brand))].sort();
+            brands.forEach(b => {
+                const opt = document.createElement('option');
+                opt.value = b;
+                opt.innerText = b;
+                select.appendChild(opt);
+            });
+        }
+
+        // 生成 LINE 連結的輔助函式
+        function getLineLink(messageText) {
+            const baseUrl = "https://line.me/R/ti/p/@278rcglr";
+            // 透過 text 參數，部分 LINE 版本可以直接帶入初次對話內容
+            return `${baseUrl}?text=${encodeURIComponent(messageText)}`;
+        }
+
+        // 渲染產品網格
+        function renderProducts(list) {
+            const grid = document.getElementById('productGrid');
+            grid.innerHTML = '';
+            
+            document.getElementById('statsInfo').innerText = `📊 找到符合條件的產品：${list.length} 件`;
+
+            if(list.length === 0) {
+                grid.innerHTML = `<div style="grid-column: 1/-1; text-align:center; padding: 40px; color:var(--gray);">找不到符合的產品，換個關鍵字搜尋看看吧！</div>`;
+                return;
+            }
+
+            list.forEach(prod => {
+                const isSelected = compareList.includes(prod.id) ? 'selected' : '';
+                const btnText = compareList.includes(prod.id) ? '取消比較' : '加入比較';
+                const lineMsg = `您好，我在您的網站看到【${prod.brand}】${prod.name}，售價 $${prod.price.toLocaleString()}，想跟阿胡諮詢安裝與環境評估！`;
+                const lineUrl = getLineLink(lineMsg);
+
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                card.innerHTML = `
+                    <div>
+                        <span class="brand-badge">${prod.brand}</span>
+                        <div class="product-name">${prod.name}</div>
+                        <div class="product-type">📁 ${prod.type}</div>
+                    </div>
+                    <div>
+                        <div class="product-price">$${prod.price.toLocaleString()}</div>
+                        <div class="card-actions">
+                            <button class="btn btn-compare ${isSelected}" onclick="toggleCompare(${prod.id})">${btnText}</button>
+                            <a class="btn btn-contact" href="${lineUrl}" target="_blank">詢問阿胡</a>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // 類型切換
+        function changeType(type, element) {
+            currentType = type;
+            const buttons = document.querySelectorAll('.filter-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            element.classList.add('active');
+            filterAndSearch();
+        }
+
+        // 綜合過濾與搜尋核心邏輯
+        function filterAndSearch() {
+            const keyword = document.getElementById('searchInput').value.toLowerCase().trim();
+            const brand = document.getElementById('brandSelect').value;
+
+            let result = products;
+
+            if (currentType !== 'all') {
+                result = result.filter(p => p.type === currentType);
+            }
+
+            if (brand !== 'all') {
+                result = result.filter(p => p.brand === brand);
+            }
+
+            if (keyword !== '') {
+                result = result.filter(p => 
+                    p.name.toLowerCase().includes(keyword) || 
+                    p.brand.toLowerCase().includes(keyword) ||
+                    p.spec.toLowerCase().includes(keyword)
+                );
+            }
+
+            renderProducts(result);
+        }
+
+        // 切換加入/移除比較清單 (最多4款)
+        function toggleCompare(id) {
+            const index = compareList.indexOf(id);
+            if (index > -1) {
+                compareList.splice(index, 1);
+            } else {
+                if (compareList.length >= 4) {
+                    alert('最多只能同時比較 4 款產品喔！請先移除其他商品。');
+                    return;
+                }
+                compareList.push(id);
+            }
+            
+            filterAndSearch(); 
+            updateCompareTable();
+        }
+
+        // 清空所有比較
+        function clearAllCompare() {
+            compareList = [];
+            filterAndSearch();
+            updateCompareTable();
+        }
+
+        // 更新底部的比較表格
+        function updateCompareTable() {
+            const section = document.getElementById('compareSection');
+            const table = document.getElementById('compareTable');
+            
+            if (compareList.length === 0) {
+                section.classList.remove('active');
+                return;
+            }
+            
+            section.classList.add('active');
+            const compItems = products.filter(p => compareList.includes(p.id));
+            
+            let html = `
+                <tr>
+                    <td><strong>型號/品牌</strong></td>
+                    ${compItems.map(item => `<td><span style="color:var(--primary); font-size:0.8rem; font-weight:bold;">[${item.brand}]</span><br><strong>${item.name}</strong></td>`).join('')}
+                </tr>
+                <tr>
+                    <td><strong>功能分類</strong></td>
+                    ${compItems.map(item => `<td>${item.type}</td>`).join('')}
+                </tr>
+                <tr>
+                    <td><strong>規格與特點說明</strong></td>
+                    ${compItems.map(item => `<td style="font-size:0.85rem; color:#444; line-height:1.4;">${item.spec}</td>`).join('')}
+                </tr>
+                <tr>
+                    <td><strong>阿胡特惠價</strong></td>
+                    ${compItems.map(item => `<td style="color:#e63946; font-weight:bold; font-size:1.15rem;">$${item.price.toLocaleString()}</td>`).join('')}
+                </tr>
+                <tr>
+                    <td><strong>快速行動</strong></td>
+                    ${compItems.map(item => {
+                        const cellMsg = `阿胡您好！我使用了線上對比功能，想深入詢問這款【${item.brand}】${item.name} 的到府安裝細節！`;
+                        return `<td><a class="btn-line-inline" href="${getLineLink(cellMsg)}" target="_blank">🟢 LINE詢價這款</a></td>`;
+                    }).join('')}
+                </tr>
+                <tr>
+                    <td><strong>操作</strong></td>
+                    ${compItems.map(item => `<td><button class="remove-compare" onclick="toggleCompare(${item.id})">❌ 移除對比</button></td>`).join('')}
+                </tr>
+            `;
+            table.innerHTML = html;
+        }
+
+        // 頁面初始化
+        window.onload = function() {
+            initBrandSelect();
+            renderProducts(products);
+        };
+    </script>
+</body>
+</html>
