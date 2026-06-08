@@ -102,7 +102,7 @@
             border-color: var(--primary);
         }
 
-        /* 狀態統計 */
+        /* 狀態統計與社群連結 */
         .stats-info {
             margin-bottom: 15px;
             color: var(--gray);
@@ -110,16 +110,41 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .social-badges {
+            display: flex;
+            gap: 10px;
         }
 
         .line-top-badge {
             background-color: #06c755;
             color: white;
-            padding: 4px 12px;
+            padding: 5px 12px;
             border-radius: 15px;
             text-decoration: none;
             font-weight: bold;
             font-size: 0.85rem;
+            transition: background 0.2s;
+        }
+        .line-top-badge:hover {
+            background-color: #05b04b;
+        }
+
+        .ig-top-badge {
+            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 15px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.85rem;
+            transition: opacity 0.2s;
+        }
+        .ig-top-badge:hover {
+            opacity: 0.9;
         }
 
         /* 產品網格 */
@@ -195,6 +220,7 @@
             text-align: center;
             font-size: 0.85rem;
             transition: background 0.2s;
+            text-decoration: none;
         }
 
         .btn-compare {
@@ -316,6 +342,12 @@
             color: var(--gray);
             font-size: 0.9rem;
             background-color: #eaeff2;
+            line-height: 1.6;
+        }
+
+        .footer-info a {
+            color: inherit;
+            text-decoration: underline;
         }
     </style>
 </head>
@@ -348,7 +380,10 @@
 
         <div class="stats-info">
             <span id="statsInfo">正在載入產品資料...</span>
-            <a href="https://line.me/R/ti/p/@278rcglr" target="_blank" class="line-top-badge">💬 直接加 LINE 線上諮詢</a>
+            <div class="social-badges">
+                <a href="https://www.instagram.com/huhupurewater/" target="_blank" class="ig-top-badge">📸 追蹤阿胡 IG 實績</a>
+                <a href="https://line.me/R/ti/p/@278rcglr" target="_blank" class="line-top-badge">💬 直接加 LINE 線上諮詢</a>
+            </div>
         </div>
 
         <!-- 產品列表 -->
@@ -368,7 +403,8 @@
 
     <div class="footer-info">
         <p>經銷諮詢：阿胡淨水｜廚下飲水機與全戶軟水</p>
-        <p style="margin-top: 5px;">官方 LINE ID: <strong style="color: #05b04b;">@278rcglr</strong> (歡迎加入預約免費到府水質估價)</p>
+        <p>官方 LINE ID: <strong style="color: #05b04b;">@278rcglr</strong> | Instagram: <a href="https://www.instagram.com/huhupurewater/" target="_blank" style="color: #cc2366; font-weight: bold; text-decoration: none;">@huhupurewater</a></p>
+        <p style="margin-top: 5px; font-size: 0.85rem; color: #888;">歡迎加入 LINE 預約到府免費水質評估，並關注 IG 看更多現場施工實績案場！</p>
     </div>
 
     <script>
@@ -504,7 +540,6 @@
         // 生成 LINE 連結的輔助函式
         function getLineLink(messageText) {
             const baseUrl = "https://line.me/R/ti/p/@278rcglr";
-            // 透過 text 參數，部分 LINE 版本可以直接帶入初次對話內容
             return `${baseUrl}?text=${encodeURIComponent(messageText)}`;
         }
 
