@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>阿胡淨水｜廚下飲水機與全戶軟水 - 全品牌規格比價站</title>
+    <title>阿胡淨水｜廚下飲水機與全户軟水 - 全品牌規格比價站</title>
     <style>
         :root {
             --primary: #0077b6;
@@ -543,6 +543,34 @@
             return `${baseUrl}?text=${encodeURIComponent(messageText)}`;
         }
 
+        // 觸發詢問與許願價格輸入框的函式
+        function askWithWishPrice(id, mode) {
+            const prod = products.find(p => p.id === id);
+            if (!prod) return;
+
+            // 跳出輸入框讓使用者輸入許願價格
+            const wishPrice = prompt(`請輸入您對【${prod.brand} ${prod.name}】的許願價格（若無特定想法可直接按確定）：`);
+            
+            if (wishPrice === null) return; // 使用者按取消
+
+            let lineMsg = "";
+            if (mode === 'grid') {
+                lineMsg = `您好，我在您的網站看到【${prod.brand}】${prod.name}，售價 $${prod.price.toLocaleString()}。`;
+            } else if (mode === 'compare') {
+                lineMsg = `阿胡您好！我使用了線上對比功能，想深入詢問這款【${prod.brand}】${prod.name} 的到府安裝細節！`;
+            }
+
+            // 如果有填寫許願價，則補上這句話
+            if (wishPrice.trim() !== "") {
+                lineMsg += ` 我的許願價格是：${wishPrice.trim()} 元，想跟阿胡諮詢安裝與環境評估！`;
+            } else {
+                lineMsg += ` 想跟阿胡諮詢安裝與環境評估！`;
+            }
+
+            // 開啟 LINE 連結
+            window.open(getLineLink(lineMsg), '_blank');
+        }
+
         // 渲染產品網格
         function renderProducts(list) {
             const grid = document.getElementById('productGrid');
@@ -558,8 +586,6 @@
             list.forEach(prod => {
                 const isSelected = compareList.includes(prod.id) ? 'selected' : '';
                 const btnText = compareList.includes(prod.id) ? '取消比較' : '加入比較';
-                const lineMsg = `您好，我在您的網站看到【${prod.brand}】${prod.name}，售價 $${prod.price.toLocaleString()}，想跟阿胡諮詢安裝與環境評估！`;
-                const lineUrl = getLineLink(lineMsg);
 
                 const card = document.createElement('div');
                 card.className = 'product-card';
@@ -573,7 +599,7 @@
                         <div class="product-price">$${prod.price.toLocaleString()}</div>
                         <div class="card-actions">
                             <button class="btn btn-compare ${isSelected}" onclick="toggleCompare(${prod.id})">${btnText}</button>
-                            <a class="btn btn-contact" href="${lineUrl}" target="_blank">詢問阿胡</a>
+                            <button class="btn btn-contact" onclick="askWithWishPrice(${prod.id}, 'grid')">詢問阿胡</button>
                         </div>
                     </div>
                 `;
@@ -673,8 +699,7 @@
                 <tr>
                     <td><strong>快速行動</strong></td>
                     ${compItems.map(item => {
-                        const cellMsg = `阿胡您好！我使用了線上對比功能，想深入詢問這款【${item.brand}】${item.name} 的到府安裝細節！`;
-                        return `<td><a class="btn-line-inline" href="${getLineLink(cellMsg)}" target="_blank">🟢 LINE詢價這款</a></td>`;
+                        return `<td><button class="btn-line-inline" onclick="askWithWishPrice(${item.id}, 'compare')">🟢 LINE詢價這款</button></td>`;
                     }).join('')}
                 </tr>
                 <tr>
